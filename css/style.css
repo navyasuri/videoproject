@@ -40,7 +40,7 @@
 .famous{
     width: 350px;
     height: 80px;
-    background: white;
+    background: #fefefe;
     background-repeat: none;
     border: none;
     background-image: url("../img/makefamous.png");

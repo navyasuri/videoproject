@@ -1,6 +1,6 @@
 console.log("Script Started");
 
-console.log("hash is "+window.location.hash);
+console.log("hash is " + window.location.hash);
 
 var modal = document.getElementById('myModal');
 var span = document.getElementsByClassName("close")[0];
@@ -12,13 +12,15 @@ if (!window.location.hash) {
 else {
 
     var hash = window.location.hash.substr(1);
-    console.log("hash value "+hash);
+    console.log("hash value " + hash);
 
     window.localStorage.setItem("access_hash", hash);
-    console.log( " local storage "+ window.localStorage.getItem("access_hash"));
+    console.log(" local storage " + window.localStorage.getItem("access_hash"));
 
     var getLink = "https://api.instagram.com/v1/users/self/?" + window.location.hash.substr(1);
     console.log("the link is " + getLink);
+
+    var myData;
 
     // Send a get request with the token to insta
     fetch(getLink).then(function (response) {
@@ -26,6 +28,12 @@ else {
     })
         .then(function (data) {
             console.log(data.data);
+            var text = document.getElementById("para");
+            console.log("h1 text" + text);
+            console.log("username" + data.data.username);
+            text.innerText = "Hello @" + data.data.username;
+            window.localStorage.setItem("data", JSON.stringify(data.data));
+            console.log("inner html" + text.innerText);
         });
 }
 
@@ -59,8 +67,8 @@ function displayModal() {
     //     }
     // }
 
-    console.log("Modal Style "+modal.style.display);
-    modal.style.display="block";
+    console.log("Modal Style " + modal.style.display);
+    modal.style.display = "block";
 
 }
 

@@ -12,11 +12,11 @@ var span = document.getElementsByClassName("close")[0];
 // if not then use the default data, if yes use the local storage data
 
 if (window.location.hash) {
-    // var hash = window.location.hash.substr(1);
+    var hash = window.location.hash.substr(1);
     // console.log("hash value " + hash);
 
-    window.localStorage.setItem("access_hash", hash);
-    // console.log(" local storage " + window.localStorage.getItem("access_hash"));
+    window.sessionStorage.setItem("access_hash", hash);
+    // console.log(" local storage " + window.sessionStorage.getItem("access_hash"));
 
     var getLink = "https://api.instagram.com/v1/users/self/?" + window.location.hash.substr(1);
     // console.log("the link is " + getLink);
@@ -26,37 +26,64 @@ if (window.location.hash) {
         return response.json();
     })
         .then(function (data) {
-            window.localStorage.setItem("data", JSON.stringify(data.data));
+            window.sessionStorage.setItem("data", JSON.stringify(data.data));
             console.log("Local storage set");
+            return data.data;
+        })
+        .then(function (json_data){
+            updateData(json_data);
+            console.log("update data");
         });
+
+    console.log("here");
 }
 
-// if the data is null, check whether user has visited or not
+else {
+    if (window.sessionStorage.getItem("data") == null) {
 
-if(window.localStorage.getItem("data")==null){
-    // check if user has already decided to not login to insta. If so then don't do anything
-    // If not decided, then display modal and set variable to true
-    if (window.localStorage.getItem("already_set")==null){
-        displayModal();
-        window.localStorage.setItem("already_set", true);
+        console.log("here2")
+        // check if user has already decided to not login to insta. If so then don't do anything
+        // If not decided, then display modal and set variable to true
+        if (window.sessionStorage.getItem("already_set") == null) {
+            displayModal();
+            window.sessionStorage.setItem("already_set", true);
+        }
+
+        else{
+            // user has decided to not login to insta
+            var default_data = {
+                username: "idonthaveinsta", 
+                profile_picture: "http://designatprinting.com/wp-content/uploads/kisspng-stick-man-figure-clip-art-happy-5ab290d04e2772-18.jpg", 
+                counts: {
+                    followed_by: 0
+                }
+            };
+            window.sessionStorage.setItem("data", JSON.stringify(default_data));
+        }
+
+    }
+
+    else {
+        updateData(JSON.parse(sessionStorage.getItem("data")));
     }
 
 }
 
-else{
+
+function updateData(json_data){
+    
     var text = document.getElementById("para");
+    var img = document.getElementById("prof");
     console.log("h1 text" + text);
-    console.log("username" + data.data.username);
-    text.innerText = "Hello @" + data.data.username + ". You have " + data.data.counts.followed_by + " followers. We can triple that in a week!";
-    window.localStorage.setItem("data", JSON.stringify(data.data));
+    console.log("username" + json_data.username);
+    text.innerText = "Hello @" + json_data.username + ". You have " + json_data.counts.followed_by + " followers. We can triple that in a week!";
+    img.src = json_data.profile_picture;
     console.log("inner html" + text.innerText);
 }
 
-
-
 // var current = new URLSearchParams(window.location.href);
 // if (!window.location.hash) {
-//     if (window.localStorage.getItem("data") == null) {
+//     if (window.sessionStorage.getItem("data") == null) {
 //         displayModal();
 //     }
 // }
@@ -66,8 +93,8 @@ else{
 //     var hash = window.location.hash.substr(1);
 //     console.log("hash value " + hash);
 
-//     window.localStorage.setItem("access_hash", hash);
-//     console.log(" local storage " + window.localStorage.getItem("access_hash"));
+//     window.sessionStorage.setItem("access_hash", hash);
+//     console.log(" local storage " + window.sessionStorage.getItem("access_hash"));
 
 //     var getLink = "https://api.instagram.com/v1/users/self/?" + window.location.hash.substr(1);
 //     console.log("the link is " + getLink);
@@ -84,7 +111,7 @@ else{
 //             console.log("h1 text" + text);
 //             console.log("username" + data.data.username);
 //             text.innerText = "Hello @" + data.data.username + ". You have " + data.data.counts.followed_by + " followers. We can triple that in a week!";
-//             window.localStorage.setItem("data", JSON.stringify(data.data));
+//             window.sessionStorage.setItem("data", JSON.stringify(data.data));
 //             console.log("inner html" + text.innerText);
 //         });
 // }
@@ -127,7 +154,7 @@ function displayModal() {
 function getToken(username) {
     var params = {
         "client_id": client_id,
-        "redirect_uri": "http://ns3774.nyuad.im",
+        "redirect_uri": window.location.href,
         "response_type": "token"
     };
     var query = $.param(params);

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>InstantFame</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+
+<body>
+
+    <div class="topBanner">
+
+        <a href="indexHome.html">
+            <div class="firstbutton">
+                <img src="images/instantfameLogo.png" style="height: 40px; width: 150px;">
+            </div>
+        </a>
+        <a href="index.html">
+            <div class="button">
+                <img src="images/exploreicon.png" style="height: 40px; width: 50px;">
+            </div>
+        </a>
+        <a href="indexLove.html">
+            <div class="button">
+                <img src="images/loveicon.png" style="height: 40px; width: 50px;">
+            </div>
+        </a>
+        <a href="indexAboutUs.html">
+            <div class="button">
+                <img src="images/profileicon.png" style="height: 40px; width: 50px;">
+            </div>
+        </a>
+
+    </div>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h1>Hey, you!</h1>
+            <h1>Join Our World of Online Fame!</h1>
+            <h2>Check your potential with our analyisis tool</h2>
+            <a onclick="getToken()">
+                <img src="https://www.rowland.com.au/wp-content/uploads/blog-post-instagram-MOD-AV.gif">
+            </a>
+            <br>
+            <button onclick="getToken()" class="famous"></button>
+        </div>
+    </div>
+
+    <!-- Actual Website goes here -->
+    <!-- <div>
+
+        <h1>
+            Hello @idonthaveinsta! You have 0 followers. We can triple that in a week!
+        </h1>
+
+    </div> -->
+
+    <div class="profile-box">
+        <img id="prof" src="http://designatprinting.com/wp-content/uploads/kisspng-stick-man-figure-clip-art-happy-5ab290d04e2772-18.jpg">
+
+        <p id="para">Hello @idonthaveinsta! You have 0 followers. We can triple that in a week!</p>
+        <p>Interested? Click below! </p>
+
+        <button class="lets-go" onclick=" location.href = 'index.html'; "></button>
+    </div>
+
+
+    <script src="javascript/script.js"></script>
+</body>
+
+</html>
